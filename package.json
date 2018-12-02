@@ -4,6 +4,9 @@
   "main": "index.js",
   "author": "Matt Palmer <palmer.s.matt@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "check": "node ./bin/check.js"
+  },
   "dependencies": {
     "ramda": "^0.26.1",
     "rxjs": "^6.3.3"
