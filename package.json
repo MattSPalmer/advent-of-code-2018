@@ -1,0 +1,11 @@
+{
+  "name": "2018",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Matt Palmer <palmer.s.matt@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ramda": "^0.26.1",
+    "rxjs": "^6.3.3"
+  }
+}
