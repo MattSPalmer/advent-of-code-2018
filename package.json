@@ -9,6 +9,7 @@
     "lint": "eslint ./bin ./util ./days"
   },
   "dependencies": {
+    "pngjs-image": "^0.11.7",
     "ramda": "^0.26.1",
     "rxjs": "^6.3.3"
   },
