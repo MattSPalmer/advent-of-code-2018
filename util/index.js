@@ -9,6 +9,12 @@ const readFile$ = path => {
   return _readFile$(path).pipe(op.map(buf => buf.toString()));
 };
 
+const makeReplayable = obs => {
+  const subject = new Rx.ReplaySubject();
+  obs.subscribe(subject);
+  return Rx.from(subject);
+};
+
 const takeWhileInclusive = predicate => {
   const killSignal = Symbol();
   return obs =>
@@ -44,5 +50,6 @@ const makeImage$ = path => pixels =>
 module.exports = {
   readFile$,
   makeImage$,
+  makeReplayable,
   takeWhileInclusive
 };
