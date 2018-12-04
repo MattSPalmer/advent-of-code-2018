@@ -1,12 +1,11 @@
-const Rx = require("rxjs");
 const op = require("rxjs/operators");
 const R = require("ramda");
 
 const path = require("path");
 
-const { readFile$ } = require("../../util");
+const { readFile$, takeWhileInclusive } = require("../../../util");
 
-const INPUT = path.join(__dirname, "..", "1", "input.txt");
+const INPUT = path.join(__dirname, "..", "input.txt");
 
 const inputByItem$ = readFile$(INPUT).pipe(
   op.concatMap(x => x.split("\n")),
@@ -23,10 +22,7 @@ const output = inputByItem$.pipe(
     },
     { seen: new Set() }
   ),
-  op.concatMap(
-    payload => payload.seenBefore ? Rx.of(payload, null) : Rx.of(payload)
-  ),
-  op.takeWhile(R.complement(R.isNil)),
+  takeWhileInclusive(payload => !payload.seenBefore),
   op.last(),
   op.map(R.prop("current"))
 );

@@ -13,16 +13,19 @@ const ANSWER_RECORD = path.join(__dirname, "..", "confirmed-answers.json");
 
 const answerEntries$ = readFile$(ANSWER_RECORD).pipe(
   op.map(JSON.parse),
-  op.concatMap(Object.entries)
+  op.concatMap(Object.entries),
+  op.concatMap(([day, { a, b }]) => [[day, "a", a], [day, "b", b]]),
+  op.toArray(),
+  op.concatMap(R.sortBy(([day, stage]) => [day, stage]))
 );
 
 answerEntries$
   .pipe(
-    op.mergeMap(([day, answer]) =>
-      myGuessFor(day).pipe(
-        op.map(guess => [Number.parseInt(day), answer, guess])
-      )),
-    op.toArray(),
-    op.concatMap(R.sortBy(R.prop(0)))
+    op.concatMap(([day, stage, answer]) =>
+      myGuessFor(`${day}/${stage}`).pipe(
+        op.map(R.merge({ title: `${day}${stage}`, answer })),
+        op.map(item => [ item.title, item.answer, item.guess ])
+      )
+    )
   )
   .subscribe(console.log);
