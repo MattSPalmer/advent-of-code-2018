@@ -5,10 +5,17 @@
   "author": "Matt Palmer <palmer.s.matt@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "check": "node ./bin/check.js"
+    "check": "node ./bin/check.js",
+    "lint": "eslint ./bin ./util ./days"
   },
   "dependencies": {
     "ramda": "^0.26.1",
     "rxjs": "^6.3.3"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "prettier": "^1.15.3"
   }
 }

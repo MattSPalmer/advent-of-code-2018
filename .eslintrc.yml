@@ -1,17 +1,12 @@
 env:
-  browser: true
+  node: true
   es6: true
-  'jest/globals': true
 extends:
   - 'eslint:recommended'
-  - 'plugin:react/recommended'
   - 'prettier'
-  - 'prettier/react'
-parser: 'babel-eslint'
+parser: 'espree'
 plugins:
   - prettier
-  - jest
-  - react
 rules:
   'prettier/prettier': error
   indent:
