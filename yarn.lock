@@ -60,6 +60,13 @@ ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
+arcsecond@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/arcsecond/-/arcsecond-1.1.1.tgz#67ba527108a95c5cd4e26d55d7b07817d336e1ec"
+  integrity sha512-AmFtmtd1i/hk/AdoSMEUPMh1TPSmlBuicKMkW0/GgZjKbwE8ySAklh+GKVzlGYTqopk/xI77FO5VNN2HAAMpTA==
+  dependencies:
+    data.either "^1.5.2"
+
 argparse@^1.0.7:
   version "1.0.10"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.10.tgz#bcd6791ea5ae09725e17e5ad988134cd40b3d911"
@@ -213,6 +220,11 @@ dashdash@^1.12.0:
   integrity sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA=
   dependencies:
     assert-plus "^1.0.0"
+
+data.either@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/data.either/-/data.either-1.5.2.tgz#5b25cafa7ff1361806e20937a1201c4472763dcf"
+  integrity sha512-ADXzxd3HiUzK+X0Txy8ZxzGKlQcVVMITkQ6yOWZ61EFxQ4a4YEHIMI4mPYc7U4q/3btGNMpJ9+Mt+Q/IWAQCZw==
 
 debug@^4.0.1:
   version "4.1.0"

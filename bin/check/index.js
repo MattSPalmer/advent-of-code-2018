@@ -32,35 +32,42 @@ const myGuessFor = n =>
     timeResult
   );
 
+const makePipe = (...fns) => obs => obs.pipe(...fns);
+
+const sortBy = fn => makePipe(op.toArray(), op.concatMap(R.sortBy(fn)));
+
 const answerEntries$ = readFile$(ANSWER_RECORD).pipe(
   op.map(JSON.parse),
   op.concatMap(Object.entries),
   op.concatMap(([day, stages]) =>
     Object.entries(stages).map(([k, v]) => [day, k, v])
   ),
-  op.toArray(),
-  op.concatMap(R.sortBy(R.apply(formatStage)))
+  sortBy(R.apply(formatStage))
 );
 
-const report = obs =>
-  obs.pipe(
-    op.map(R.prop("runtime")),
-    op.reduce(R.add, 0),
-    op.map(total => `\nTotal runtime: ${formatTime(total)}`)
-  );
+const report = makePipe(
+  op.map(R.prop("runtime")),
+  op.reduce(R.add, 0),
+  op.map(total => `\nTotal runtime: ${formatTime(total)}`)
+);
 
-const runStage = ([day, stage, answer]) => {
-  const obs = R.isNil(answer) ? Rx.empty() : myGuessFor(`${day}/${stage}`);
-  return obs.pipe(op.map(R.merge({ title: formatStage(day, stage), answer })));
-};
-
-const result$ = answerEntries$.pipe(
-  op.concatMap(runStage),
+const trialResult$ = answerEntries$.pipe(
+  op.concatMap(([day, stage, answer]) => {
+    const obs = R.isNil(answer) ? Rx.empty() : myGuessFor(`${day}/${stage}`);
+    const transform = R.merge({ title: formatStage(day, stage), answer });
+    return obs.pipe(op.map(transform));
+  }),
   op.share()
 );
 
-const output$ = result$.pipe(
-  obs => Rx.merge(report(obs), obs.pipe(op.map(formatGuessResult))),
+const presentResults = result$ =>
+  result$.pipe(
+    op.map(formatGuessResult),
+    op.merge(report(result$))
+  );
+
+const output$ = trialResult$.pipe(
+  presentResults,
   op.catchError(err => Rx.of(err))
 );
 
